@@ -5,8 +5,10 @@ app.get('/', function (_, res) {
     res.send('Hello, World!')
 })
 
-app.get('/ola', function (_, res) {
-    res.send('Olá, mundo!')
+const card = ['Menu Online', 'Sorteios X', 'Educação Infantil', 'Calc IMC']
+
+app.get('/card', function (_, res) {
+    res.send(card)
 })
 
 app.listen(3001, function () {
