@@ -39,21 +39,19 @@ async function main() {
 
   app.use(express.json())
 
-  app.post('/card', function (req, res) {
-    const body = req.body
+  app.post('/card', async function (req, res) {
+    const novoCard = req.body
 
-    const novoCard = body.title
-
-    if (!novoCard) {
+    if (!novoCard || !novoCard.title) {
       return res.status(400).send('A requisição deve conter a propriedade `title`.')
     }
 
-    if (card.includes(novoCard)) {
-      return res.status(409).send('Título já existente para um Card.')
-    }
+    // if (card.includes(novoCard)) {
+    //   return res.status(409).send('Título já existente para um Card.')
+    // }
 
-    card.push(novoCard)
-    res.status(201).send('Card adicionado com sucesso: ' + novoCard)
+    await collection.insertOne(novoCard)
+    res.status(201).send(novoCard)
   })
 
   app.put('/card/:id', function (req, res) {
