@@ -2,12 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const { connectToDatabase } = require('./db/database-connection');
 const cardRouter = require('./card/card.router');
+const cors = require('cors');
 
 async function main() {
   connectToDatabase()
 
   const app = express()
   app.use(express.json())
+  app.use(cors())
 
   app.get('/', function (_, res) {
     res.send('Hello, World!')
