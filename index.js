@@ -1,81 +1,98 @@
-const express = require('express')
-const app = express()
+require('dotenv').config();
+const express = require('express');
+const { MongoClient } = require('mongodb');
 
-app.get('/', function (_, res) {
-  res.send('Hello, World!')
-})
+const dbUrl = process.env.DATABASE_URL
+const dbName = 'db-api-restful-coders'
 
-const card = ['Menu Online', 'Sorteios X', 'Educação Infantil', 'Calc IMC']
+async function main() {
+  const client = new MongoClient(dbUrl)
+  await client.connect()
+  console.log('Banco de dados conectado!')
 
-app.get('/card', function (_, res) {
-  res.send(card.filter(Boolean))
-})
+  const db = client.db(dbName)
+  const collection = db.collection('card')
 
-app.get('/card/:id', function (req, res) {
-  const id = req.params.id
-  const item = card[id - 1]
+  const app = express()
 
-  if (!item) {
-    return res.status(404).send('Item não encontrado.')
-  }
+  app.get('/', function (_, res) {
+    res.send('Hello, World!')
+  })
 
-  res.send(item)
-})
+  const card = ['Menu Online', 'Sorteios X', 'Educação Infantil', 'Calc IMC']
 
-app.use(express.json())
+  app.get('/card', function (_, res) {
+    res.send(card.filter(Boolean))
+  })
 
-app.post('/card', function (req, res) {
-  const body = req.body
+  app.get('/card/:id', function (req, res) {
+    const id = req.params.id
+    const item = card[id - 1]
 
-  const novoCard = body.title
+    if (!item) {
+      return res.status(404).send('Item não encontrado.')
+    }
 
-  if (!novoCard) {
-    return res.status(400).send('A requisição deve conter a propriedade `title`.')
-  }
+    res.send(item)
+  })
 
-  if (card.includes(novoCard)) {
-    return res.status(409).send('Título já existente para um Card.')
-  }
+  app.use(express.json())
 
-  card.push(novoCard)
-  res.status(201).send('Card adicionado com sucesso: ' + novoCard)
-})
+  app.post('/card', function (req, res) {
+    const body = req.body
 
-app.put('/card/:id', function (req, res) {
-  const id = req.params.id
+    const novoCard = body.title
 
-  if (!card[id - 1]) {
-    return res.status(404).send('Item não encontrado.')
-  }
+    if (!novoCard) {
+      return res.status(400).send('A requisição deve conter a propriedade `title`.')
+    }
 
-  const body = req.body
-  const novoCard = body.title
+    if (card.includes(novoCard)) {
+      return res.status(409).send('Título já existente para um Card.')
+    }
 
-  if (!novoCard) {
-    return res.status(400).send('A requisição deve conter a propriedade `title`.')
-  }
+    card.push(novoCard)
+    res.status(201).send('Card adicionado com sucesso: ' + novoCard)
+  })
 
-  if (card.includes(novoCard)) {
-    return res.status(409).send('Título já existente para um Card.')
-  }
+  app.put('/card/:id', function (req, res) {
+    const id = req.params.id
 
-  card[id - 1] = novoCard
+    if (!card[id - 1]) {
+      return res.status(404).send('Item não encontrado.')
+    }
 
-  res.send('Card atualizado com sucesso: ' + id + ' - ' + novoCard)
-})
+    const body = req.body
+    const novoCard = body.title
 
-app.delete('/card/:id', function (req, res) {
-  const id = req.params.id
+    if (!novoCard) {
+      return res.status(400).send('A requisição deve conter a propriedade `title`.')
+    }
 
-  if (!card[id - 1]) {
-    return res.status(404).send('Item não encontrado.')
-  }
+    if (card.includes(novoCard)) {
+      return res.status(409).send('Título já existente para um Card.')
+    }
 
-  delete card[id - 1]
+    card[id - 1] = novoCard
 
-  res.send('Card removido com sucesso ' + id)
-})
+    res.send('Card atualizado com sucesso: ' + id + ' - ' + novoCard)
+  })
 
-app.listen(3001, function () {
-  console.log('Aplicação rodando na porta https://localhost:3001')
-})
+  app.delete('/card/:id', function (req, res) {
+    const id = req.params.id
+
+    if (!card[id - 1]) {
+      return res.status(404).send('Item não encontrado.')
+    }
+
+    delete card[id - 1]
+
+    res.send('Card removido com sucesso ' + id)
+  })
+
+  app.listen(3001, function () {
+    console.log('Aplicação rodando na porta https://localhost:3001')
+  })
+}
+
+main()
