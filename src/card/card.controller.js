@@ -1,5 +1,8 @@
-function readAll(_, res) {
-  res.send('Read All')
+const service = require('./card.service')
+
+async function readAll(_, res) {
+  const cards = await service.readAll()
+  res.send(cards)
 }
 
 function readById(_, res) {
