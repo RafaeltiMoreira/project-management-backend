@@ -16,6 +16,7 @@ function readAll() {
  * @returns 
  */
 function readById(id) {
+  // Acessa o card pelo ID
   return getCollection().findOne({ _id: new ObjectId(id) })
 }
 
@@ -37,7 +38,14 @@ function updateById(id, newCard) {
   )
 }
 
-function deleteById() {
+/**
+ * 
+ * @param {string} id 
+ * @returns 
+ */
+function deleteById(id) {
+  // remove o card da collection pelo ID
+  return getCollection().deleteOne({ _id: new ObjectId(id) })
 }
 
 module.exports = {

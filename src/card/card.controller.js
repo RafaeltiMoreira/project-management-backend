@@ -42,8 +42,13 @@ async function updateById(req, res) {
   res.send(newCard)
 }
 
-function deleteById(_, res) {
-  res.send('Delete By ID')
+async function deleteById(req, res) {
+  const id = req.params.id
+
+  // Remove o card pelo ID
+  await service.deleteById(id)
+
+  res.send('Card removido com sucesso ' + id)
 }
 
 module.exports = {
