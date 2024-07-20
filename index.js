@@ -8,7 +8,7 @@ app.get('/', function (_, res) {
 const card = ['Menu Online', 'Sorteios X', 'Educação Infantil', 'Calc IMC']
 
 app.get('/card', function (_, res) {
-  res.send(card)
+  res.send(card.filter(Boolean))
 })
 
 app.get('/card/:id', function (req, res) {
@@ -35,6 +35,13 @@ app.put('/card/:id', function (req, res) {
   card[id - 1] = novoCard
 
   res.send('Card atualizado com sucesso: ' + id + '-' + novoCard)
+})
+
+app.delete('/card/:id', function (req, res) {
+  const id = req.params.id
+  delete card[id - 1]
+
+  res.send('Card removido com sucesso ' + id)
 })
 
 app.listen(3001, function () {
