@@ -28,6 +28,15 @@ app.post('/card', function (req, res) {
   res.send('Card adicionado com sucesso: ' + novoCard)
 })
 
+app.put('/card/:id', function (req, res) {
+  const id = req.params.id
+  const body = req.body
+  const novoCard = body.title
+  card[id - 1] = novoCard
+
+  res.send('Card atualizado com sucesso: ' + id + '-' + novoCard)
+})
+
 app.listen(3001, function () {
   console.log('Aplicação rodando na porta https://localhost:3001')
 })
