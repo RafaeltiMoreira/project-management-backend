@@ -21,17 +21,6 @@ async function main() {
   app.use('/card', cardRouter)
 
   /*
-  app.get('/card/:id', async function (req, res) {
-    const id = req.params.id
-    const item = await collection.findOne({ _id: new ObjectId(id) })
-
-    if (!item) {
-      return res.status(404).send('Item não encontrado.')
-    }
-
-    res.send(item)
-  })
-
   app.post('/card', async function (req, res) {
     const novoCard = req.body
 

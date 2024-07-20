@@ -6,8 +6,15 @@ async function readAll(_, res) {
   res.send(cards)
 }
 
-function readById(_, res) {
-  res.send('Read By ID')
+async function readById(req, res) {
+  // Acesso a rota por ID do card no service
+  const id = req.params.id
+  const card = await service.readById(id)
+
+  if (!card) {
+    return res.status(404).send('Card não encontrado.')
+  }
+  res.send(card)
 }
 
 function create(_, res) {
