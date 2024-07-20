@@ -21,8 +21,9 @@ async function main() {
 
   const card = ['Menu Online', 'Sorteios X', 'Educação Infantil', 'Calc IMC']
 
-  app.get('/card', function (_, res) {
-    res.send(card.filter(Boolean))
+  app.get('/card', async function (_, res) {
+    const cards = await collection.find().toArray()
+    res.send(cards)
   })
 
   app.get('/card/:id', function (req, res) {
