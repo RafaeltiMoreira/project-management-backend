@@ -1,6 +1,7 @@
 const service = require('./card.service')
 
 async function readAll(_, res) {
+  // Acesso a lista de cards no service
   const cards = await service.readAll()
   res.send(cards)
 }

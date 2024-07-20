@@ -21,11 +21,6 @@ async function main() {
   app.use('/card', cardRouter)
 
   /*
-  app.get('/card', async function (_, res) {
-    const cards = await collection.find().toArray()
-    res.send(cards)
-  })
-
   app.get('/card/:id', async function (req, res) {
     const id = req.params.id
     const item = await collection.findOne({ _id: new ObjectId(id) })

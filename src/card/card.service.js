@@ -5,6 +5,7 @@ function getCollection() {
 }
 
 function readAll() {
+  // Acesso a lista de cards na collection MongoDB
   return getCollection().find().toArray()
 }
 
