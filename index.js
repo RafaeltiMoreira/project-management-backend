@@ -24,6 +24,15 @@ app.post('/card', function (req, res) {
   const body = req.body
 
   const novoCard = body.title
+
+  if (!novoCard) {
+    return res.send('A requisição deve conter a propriedade `title`.')
+  }
+
+  if (card.includes(novoCard)) {
+    return res.send('Título já existente para um Card.')
+  }
+
   card.push(novoCard)
   res.send('Card adicionado com sucesso: ' + novoCard)
 })
@@ -32,9 +41,18 @@ app.put('/card/:id', function (req, res) {
   const id = req.params.id
   const body = req.body
   const novoCard = body.title
+
+  if (!novoCard) {
+    return res.send('A requisição deve conter a propriedade `title`.')
+  }
+
+  if (card.includes(novoCard)) {
+    return res.send('Título já existente para um Card.')
+  }
+
   card[id - 1] = novoCard
 
-  res.send('Card atualizado com sucesso: ' + id + '-' + novoCard)
+  res.send('Card atualizado com sucesso: ' + id + ' - ' + novoCard)
 })
 
 app.delete('/card/:id', function (req, res) {
