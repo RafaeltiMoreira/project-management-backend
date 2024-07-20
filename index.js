@@ -18,6 +18,16 @@ app.get('/card/:id', function (req, res) {
   res.send(item)
 })
 
+app.use(express.json())
+
+app.post('/card', function (req, res) {
+  const body = req.body
+
+  const novoCard = body.title
+  card.push(novoCard)
+  res.send('Card adicionado com sucesso: ' + novoCard)
+})
+
 app.listen(3001, function () {
   console.log('Aplicação rodando na porta https://localhost:3001')
 })
