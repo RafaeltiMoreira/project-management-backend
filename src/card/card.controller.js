@@ -17,8 +17,15 @@ async function readById(req, res) {
   res.send(card)
 }
 
-function create(_, res) {
-  res.send('Create')
+async function create(req, res) {
+  const newCard = req.body
+
+  if (!newCard || !newCard.title) {
+    return res.status(400).send('A requisição deve conter a propriedade `title`.')
+  }
+
+  await service.create(newCard)
+  res.status(201).send(newCard)
 }
 
 function updateById(_, res) {

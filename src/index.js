@@ -21,21 +21,6 @@ async function main() {
   app.use('/card', cardRouter)
 
   /*
-  app.post('/card', async function (req, res) {
-    const novoCard = req.body
-
-    if (!novoCard || !novoCard.title) {
-      return res.status(400).send('A requisição deve conter a propriedade `title`.')
-    }
-
-    // if (card.includes(novoCard)) {
-    //   return res.status(409).send('Título já existente para um Card.')
-    // }
-
-    await collection.insertOne(novoCard)
-    res.status(201).send(novoCard)
-  })
-
   app.put('/card/:id', async function (req, res) {
     const id = req.params.id
 
