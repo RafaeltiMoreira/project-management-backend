@@ -18,6 +18,7 @@ async function readById(req, res) {
 }
 
 async function create(req, res) {
+  // Adiciona no DB pelo service
   const newCard = req.body
 
   if (!newCard || !newCard.title) {
@@ -29,7 +30,7 @@ async function create(req, res) {
 }
 
 async function updateById(req, res) {
-
+  // Aualiza no DB pelo ID
   const id = req.params.id
 
   const newCard = req.body
@@ -43,9 +44,9 @@ async function updateById(req, res) {
 }
 
 async function deleteById(req, res) {
+  // Remove o card pelo ID
   const id = req.params.id
 
-  // Remove o card pelo ID
   await service.deleteById(id)
 
   res.send('Card removido com sucesso ' + id)
