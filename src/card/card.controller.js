@@ -28,8 +28,18 @@ async function create(req, res) {
   res.status(201).send(newCard)
 }
 
-function updateById(_, res) {
-  res.send('Update By ID')
+async function updateById(req, res) {
+
+  const id = req.params.id
+
+  const newCard = req.body
+
+  if (!newCard || !newCard.title) {
+    return res.status(400).send('A requisição deve conter a propriedade `title`.')
+  }
+  await service.updateById(id, newCard)
+
+  res.send(newCard)
 }
 
 function deleteById(_, res) {

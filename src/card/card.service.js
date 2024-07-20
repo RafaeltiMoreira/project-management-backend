@@ -20,10 +20,21 @@ function readById(id) {
 }
 
 function create(newCard) {
+  // Adicionar na collection
   return getCollection().insertOne(newCard)
 }
 
-function updateById() {
+/**
+ * 
+ * @param {string} id 
+ * @returns 
+ */
+function updateById(id, newCard) {
+  // Atualizar na collection o card pelo ID
+  return getCollection().updateOne(
+    { _id: new ObjectId(id) },
+    { $set: newCard }
+  )
 }
 
 function deleteById() {
