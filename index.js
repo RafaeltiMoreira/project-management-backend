@@ -15,6 +15,10 @@ app.get('/card/:id', function (req, res) {
   const id = req.params.id
   const item = card[id - 1]
 
+  if (!item) {
+    return res.status(404).send('Item não encontrado.')
+  }
+
   res.send(item)
 })
 
@@ -39,6 +43,11 @@ app.post('/card', function (req, res) {
 
 app.put('/card/:id', function (req, res) {
   const id = req.params.id
+
+  if (!card[id - 1]) {
+    return res.status(404).send('Item não encontrado.')
+  }
+
   const body = req.body
   const novoCard = body.title
 
@@ -57,6 +66,11 @@ app.put('/card/:id', function (req, res) {
 
 app.delete('/card/:id', function (req, res) {
   const id = req.params.id
+
+  if (!card[id - 1]) {
+    return res.status(404).send('Item não encontrado.')
+  }
+
   delete card[id - 1]
 
   res.send('Card removido com sucesso ' + id)
