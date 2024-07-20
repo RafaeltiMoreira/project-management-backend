@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { connectToDatabase } = require('./db/database-connection');
+const cardRouter = require('./card/card.router');
 // const { MongoClient, ObjectId } = require('mongodb');
 
 
@@ -16,6 +17,8 @@ async function main() {
   app.get('/', function (_, res) {
     res.send('Hello, World!')
   })
+
+  app.use('/card', cardRouter)
 
   /*
   app.get('/card', async function (_, res) {
