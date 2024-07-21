@@ -51,7 +51,7 @@ async function deleteById(req, res) {
 
   await service.deleteById(id)
 
-  res.send('Card removido com sucesso ' + id)
+  res.status(204).send()
 }
 
 module.exports = {
