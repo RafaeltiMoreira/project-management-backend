@@ -1,3 +1,4 @@
+const card = require('./card.entity')
 const service = require('./card.service')
 
 async function readAll(_, res) {
@@ -18,11 +19,11 @@ async function readById(req, res) {
 }
 
 async function create(req, res) {
-  // Adiciona no DB pelo service
-  const newCard = req.body
+  // Adiciona no DB pelo service com validação
+  const { error, value: newCard } = card.validate(req.body)
 
-  if (!newCard || !newCard.title) {
-    return res.status(400).send('A requisição deve conter a propriedade `title`.')
+  if (error) {
+    return res.status(400).send({ error: error.details[0].message })
   }
 
   await service.create(newCard)
@@ -33,11 +34,12 @@ async function updateById(req, res) {
   // Aualiza no DB pelo ID
   const id = req.params.id
 
-  const newCard = req.body
+  const { error, value: newCard } = card.validate(req.body)
 
-  if (!newCard || !newCard.title) {
-    return res.status(400).send('A requisição deve conter a propriedade `title`.')
+  if (error) {
+    return res.status(400).send({ error: error.details[0].message })
   }
+
   await service.updateById(id, newCard)
 
   res.send(newCard)
