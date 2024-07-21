@@ -8,24 +8,28 @@ require('express-async-errors');
 async function main() {
   connectToDatabase()
 
-  const app = express()
-  app.use(express.json())
-  app.use(cors())
+  const app = express();
+  app.use(express.json());
+  app.use(cors());
 
   app.get('/', function (_, res) {
     res.send('Hello, World!')
-  })
+  });
 
-  app.use('/card', cardRouter)
+  app.use('/card', cardRouter);
 
   app.use(function (err, req, res, next) {
     console.log(err.stack);
     res.status(500).send({ error: 'Negado, algo deu errado!' });
-  })
+  });
+
+  app.use('*', (_, res) => {
+    res.status(404).send({ error: 'Ops, não encontrado.' })
+  });
 
   app.listen(3001, function () {
     console.log('Aplicação rodando na porta https://localhost:3001')
-  })
+  });
 }
 
-main()
+main();
